@@ -1,0 +1,73 @@
+swagger: "2.0"
+
+info:
+  title: "Cart API"
+  version: "1.0"
+
+basePath: /v1.0
+
+paths:
+  /cart:
+    get:
+      operationId: api.cart.get_cart
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Cart'
+  /cart/add-item:
+    post:
+      operationId: api.cart.add_item_to_cart
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Item'
+      responses:
+        '200':
+          description: 'Item has been added'
+        '405':
+          description: 'Invalid input'
+
+definitions:
+  Cart:
+    type: object
+    required:
+      - user_id
+    properties:
+      user_id:
+        type: integer
+        format: int64
+      items:
+        type: array
+        items: { $ref: '#/definitions/Item' }
+
+  Item:
+    type: object
+    required:
+      - product_id
+      - quantity
+    properties:
+      id:
+        type: integer
+        format: int64
+      product_id:
+        type: integer
+        format: int64
+      product:
+        $ref: '#/definitions/ProductShort'
+      quantity:
+        type: integer
+        format: int64
+
+  ProductShort:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string

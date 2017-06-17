@@ -1,0 +1,47 @@
+swagger: "2.0"
+
+info:
+  title: "Product API"
+  version: "1.0"
+
+basePath: /v1.0
+
+paths:
+  /products:
+    get:
+      operationId: api.catalog.catalog_instance.get
+      responses:
+        '200':
+          description: 'Fetch a list of items'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+  /products/create:
+    get:
+      operationId: api.catalog.create_product
+      responses:
+        '200':
+          description: ''
+  /products/{id}:
+    get:
+      operationId: api.catalog.product_detail
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Product'
+
+definitions:
+  Product:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      name: { type: string }
