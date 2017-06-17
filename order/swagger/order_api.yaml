@@ -1,0 +1,57 @@
+swagger: "2.0"
+
+info:
+  title: "Order API"
+  version: "1.0"
+
+basePath: /v1.0
+
+
+paths:
+
+  /orders/{id}:
+    get:
+      operationId: api.get_order.
+      responses:
+        '200':
+          description: 'Get order'
+          schema:
+            $ref: '#/definitions/Order'
+
+  /orders/create-from-cart:
+    post:
+      operationId: api.order.create_from_cart
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/OrderCreationDTO'
+      responses:
+        '200':
+          description: 'Order has been created'
+        '405':
+          description: 'Invalid input'
+
+
+definitions:
+
+  OrderCreationDTO:
+    type: object
+    required:
+      - cart_id
+      - user_id
+    properties:
+      cart_id:
+        type: integer
+        format: int64
+      user_id:
+        type: integer
+        format: int64
+      coupon_code:
+        type: string
+
+  Order:
+    type: object
+    required:
+      - order_id
